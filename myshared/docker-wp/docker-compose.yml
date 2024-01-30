@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+
+  wordpress:
+    image: wordpress:latest
+    restart: always
+    ports:
+      - 80:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: unirwp
+      WORDPRESS_DB_PASSWORD: ExamplePassw0rd
+      WORDPRESS_DB_NAME: unirwp
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - private
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: unirwp
+      MYSQL_USER: unirwp
+      MYSQL_PASSWORD: ExamplePassw0rd
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - private
+
+volumes:
+  wordpress:
+  db:
+
+networks:
+  private:
